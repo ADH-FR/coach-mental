@@ -2,6 +2,8 @@
 title: "Pourquoi la peur reste présente après une chute, même quand on a de l’expérience"
 description: "La peur de remonter à cheval après une chute peut durer même chez un cavalier expérimenté. Comprendre ce blocage et reprendre progressivement, sans se forcer."
 slug: "peur-de-remonter-a-cheval-apres-une-chute"
+pubDate: 2024-01-01
+image: "/images/flatte-encolure.jpg"
 ---
 
 # Pourquoi la peur reste présente après une chute, même quand on a de l’expérience
