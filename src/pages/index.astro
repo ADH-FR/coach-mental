@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts');
+
+// tri par date
+const sorted = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);
+
+// 3 derniers
+const latest = sorted.slice(0, 3);
+---
+
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coach Mental</title>
+  </head>
+
+  <body>
+    <h1>Coach in Mental</h1>
+
+    <p>Développe ton mindset et ta performance mentale.</p>
+
+    <a href="/blog" class="cta">Voir les articles</a>
+	<h2>Derniers articles</h2>
+
+<div class="grid">
+  {latest.map((post) => (
+    <a href={`/blog/${post.id}`} class="card">
+      <img src={post.data.image} alt={post.data.title} />
+      <h3>{post.data.title}</h3>
+      <p>{post.data.description}</p>
+    </a>
+  ))}
+</div>
+  </body>
+</html>
+
+<style>
+  body {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: sans-serif;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* 📱 mobile */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+  .card {
+    text-decoration: none;
+    color: black;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  h3 {
+    padding: 10px;
+  }
+
+  p {
+    padding: 0 10px 10px;
+    font-size: 0.9rem;
+  }
+
+  .cta {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: black;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+</style>

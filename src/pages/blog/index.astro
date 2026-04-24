@@ -1,17 +1,56 @@
 ---
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog');
+const posts = await getCollection('posts');
 ---
 
-<h1>Blog</h1>
+<h1>🧠 Blog Coach Mental</h1>
 
-<ul>
-  {posts.map(post => (
-    <li>
-      <a href={`/blog/${post.id}`}>
-        {post.data.title}
-      </a>
-    </li>
+<div class="grid">
+  {posts.map((post) => (
+    <a href={`/blog/${post.id}`} class="card">
+      <h2>{post.data.title}</h2>
+      <p>{post.data.description}</p>
+      <span>{post.data.pubDate.toLocaleDateString()}</span>
+    </a>
   ))}
-</ul>
+</div>
+
+<style>
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .card {
+    display: block;
+    padding: 20px;
+    border-radius: 16px;
+    background: #ffffff;
+    text-decoration: none;
+    color: black;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+  }
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  span {
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+</style>
