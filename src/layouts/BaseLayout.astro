@@ -19,7 +19,9 @@ const { title = "Coach'In Mental" } = Astro.props;
   <body>
     <header class="header">
       <div class="container header-inner">
-        <a href="/" class="logo">Mon Blog</a>
+        <a href="/" class="logo">
+			<img src="/logo.png" alt="Logo" />
+		</a>
       </div>
     </header>
 
@@ -38,9 +40,11 @@ const { title = "Coach'In Mental" } = Astro.props;
 <style>
 .header {
   border-bottom: 1px solid var(--color-border);
-    <img src="/logo.png" alt="Logo" style="height:40px;" />
 }
-
+.logo img {
+  height: 40px;
+  display: block;
+}
 .header-inner {
   display: flex;
   align-items: center;
