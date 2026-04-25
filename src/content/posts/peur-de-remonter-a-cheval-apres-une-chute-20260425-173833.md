@@ -2,6 +2,8 @@
 title: "Peur de remonter à cheval après une chute : pourquoi elle persiste et comment reprendre confiance"
 description: "Après une chute, la peur de remonter à cheval peut persister même chez un cavalier expérimenté. Découvrez pourquoi elle s’installe et comment reprendre confiance grâce à une reprise progressive, mentale et sécurisante."
 slug: "peur-de-remonter-a-cheval-apres-une-chute"
+pubDate: 2024-04-25
+image: "/images/cross-complet.jpg"
 ---
 
 # Peur de remonter à cheval après une chute : pourquoi elle persiste et comment reprendre confiance
