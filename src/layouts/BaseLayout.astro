@@ -1,0 +1,61 @@
+---
+import "../styles/global.css";
+const { title = "Coach'In Mental" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+	<style>
+  body {
+    background: #ffffff;
+  }
+</style>
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <a href="/" class="logo">Mon Blog</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>© {new Date().getFullYear()} — Mon Blog</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+.header {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.footer {
+  border-top: 1px solid var(--color-border);
+  margin-top: 4rem;
+  padding: 2rem 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+</style>

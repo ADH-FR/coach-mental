@@ -1,9 +1,8 @@
 ---
 title: "Remonter à cheval après une chute : pourquoi la peur reste, et comment reprendre sans se brusquer"
 description: "La peur de remonter à cheval après une chute est normale, même avec de l’expérience. Découvrez pourquoi elle persiste et comment reprendre confiance progressivement, sans vous forcer."
-slug: "peur-de-remonter-a-cheval-apres-une-chute"
 pubDate: 2024-04-23
-image: "/images/cross-complet.jpg"
+image: "/images/flatte-encolure.jpg"
 ---
 
 # Remonter à cheval après une chute : pourquoi la peur reste, et comment reprendre sans se brusquer

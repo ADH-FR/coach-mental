@@ -1,12 +1,20 @@
 ---
 import { getCollection, render } from 'astro:content';
-
+import BaseLayout from '../../layouts/BaseLayout.astro';
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  const posts = await getCollection('posts');
+
+  return posts.map(post => {
+    const slug = post.id
+      .split('/')
+      .pop()
+      .replace('.md', '');
+
+    return {
+      params: { slug },
+      props: { post },
+    };
+  });
 }
 
 const { post } = Astro.props;
@@ -14,6 +22,99 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<article>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{post.data.title}</title>
+  </head>
+
+  <body>
+    <article class="article">
+  <h1>{post.data.title}</h1>
+
+  {post.data.image && (
+    <img src={post.data.image} alt={post.data.title} class="cover-image" />
+  )}
+
   <Content />
 </article>
+  </body>
+</html>
+<style>
+.article {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* TITRE */
+.article h1 {
+  font-size: 2.4rem;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+/* IMAGE */
+.cover-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+/* TEXTE */
+.article p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+}
+
+/* SOUS-TITRES */
+.article h2 {
+  font-size: 1.6rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.article h3 {
+  font-size: 1.3rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+/* LISTES */
+.article ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.article li {
+  margin-bottom: 0.5rem;
+}
+
+/* LIENS */
+.article a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* BLOCS */
+.article blockquote {
+  border-left: 4px solid #e5e5e5;
+  padding-left: 1rem;
+  margin: 2rem 0;
+  color: #555;
+}
+
+/* CODE */
+.article code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ESPACEMENT GLOBAL */
+.article > * {
+  margin-bottom: 1rem;
+}
+</style>

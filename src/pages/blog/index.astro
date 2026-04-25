@@ -1,56 +1,150 @@
 ---
 import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const posts = await getCollection('posts');
 ---
 
-<h1>🧠 Blog Coach Mental</h1>
+<BaseLayout title="Blog">
+  <h1 class="page-title">Blog de Coach'In Mental</h1>
 
-<div class="grid">
+  <div class="posts-grid">
   {posts.map((post) => (
-    <a href={`/blog/${post.id}`} class="card">
-      <h2>{post.data.title}</h2>
-      <p>{post.data.description}</p>
-      <span>{post.data.pubDate.toLocaleDateString()}</span>
+    <a href={`/blog/${post.id.split('/').pop().replace('.md','')}/`} class="post-card">
+
+      {post.data.image && (
+        <div class="card-image-wrapper">
+			<img src={post.data.image} alt={post.data.title} class="card-image" />
+		</div>
+      )}
+
+      <div class="card-content">
+        <h2>{post.data.title}</h2>
+        <p>{post.data.description}</p>
+        <span>{post.data.pubDate.toLocaleDateString()}</span>
+      </div>
+
     </a>
   ))}
-</div>
+  </div>
+</BaseLayout>
 
-<style>
-  h1 {
-    text-align: center;
-    margin-bottom: 2rem;
+<style is:global>
+
+.page-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* GRID */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  align-items: stretch; /* ?? important */
+}
+
+/* CARD */
+.post-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  transition: all 0.25s ease;
+  height: 100%; /* ?? important */
+}
+/* TITRE */
+.post-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+/* DESCRIPTION */
+.post-card p {
+  color: var(--color-muted);
+  margin-bottom: 0.8rem;
+}
+/* DATE */
+.post-card span {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* IMAGE */
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+/* IMAGE WRAPPER (ratio fixe) */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: block; /* ?? important */
+}
+/* CONTENT */
+.card-content {
+  padding: 1.2rem;
+  flex-grow: 1;
+}
+
+
+/* SHADOW PREMIUM */
+.post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+}
+/* HOVER ZOOM */
+.post-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+/* TITRE */
+.post-card h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* DESCRIPTION */
+.post-card p {
+  color: var(--color-muted);
+  margin-bottom: 0.8rem;
+}
+
+/* DATE */
+.post-card span {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+/* MOBILE */
+@media (max-width: 768px) {
+  .card-image-wrapper {
+    aspect-ratio: 1 / 1; /* ?? ICI */
+  }
+}
+  
+ .card-image-wrapper {
+    aspect-ratio: 16 / 10;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
+  .post-card h2 {
+    font-size: 1rem;
   }
 
-  .card {
-    display: block;
-    padding: 20px;
-    border-radius: 16px;
-    background: #ffffff;
-    text-decoration: none;
-    color: black;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    transition: all 0.2s ease;
+  .post-card p {
+    font-size: 0.9rem;
   }
+}
 
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+/* GRAND ECRAN */
+@media (min-width: 1200px) {
+  .posts-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-
-  h2 {
-    margin-bottom: 10px;
-  }
-
-  span {
-    font-size: 0.8rem;
-    opacity: 0.6;
-  }
+}
 </style>

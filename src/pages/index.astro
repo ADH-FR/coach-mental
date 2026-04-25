@@ -8,6 +8,7 @@ const sorted = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);
 
 // 3 derniers
 const latest = sorted.slice(0, 3);
+return Astro.redirect('/blog');
 ---
 
 
