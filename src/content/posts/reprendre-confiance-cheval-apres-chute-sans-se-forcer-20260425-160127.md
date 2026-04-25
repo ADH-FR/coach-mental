@@ -2,6 +2,9 @@
 title: "Reprendre confiance à cheval après une chute sans se forcer"
 description: "Pourquoi la peur persiste après une chute à cheval, et comment reprendre confiance avec une préparation mentale et une reprise progressive, sans se forcer."
 slug: "reprendre-confiance-cheval-apres-chute-sans-se-forcer"
+pubDate: 2024-04-25
+image: "/images/flatte-encolure.jpg"
+
 ---
 
 # Pourquoi la peur reste présente après une chute à cheval
