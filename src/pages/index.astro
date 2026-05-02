@@ -1,110 +1,305 @@
 ---
 import { getCollection } from 'astro:content';
+import { categories, getCategoryLabel, getCategoryColor } from '../utils/categories';
+import '../styles/global.css';
 
 const posts = await getCollection('posts');
+const sorted = posts.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
 
-// tri par date
-const sorted = posts.sort((a, b) => b.data.pubDate - a.data.pubDate);
+const featured = sorted[0];
+const sidebar  = sorted.slice(1, 4);
 
-// 3 derniers
-const latest = sorted.slice(0, 3);
-return Astro.redirect('/blog');
+const heroIds = new Set([featured, ...sidebar].map(p => p.id));
+
+const categorySections = categories
+  .map(cat => ({
+    ...cat,
+    posts: sorted.filter(p => p.data.category === cat.slug && !heroIds.has(p.id)),
+  }))
+  .filter(cat => cat.posts.length > 0);
+
+function slug(post: typeof sorted[0]) {
+  return post.id.replace(/\.md$/, '');
+}
 ---
-
 
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Coach Mental</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog de Coach'in Mental</title>
   </head>
-
   <body>
-    <h1>Coach in Mental</h1>
+      <header class="site-header">
+        <img src="/logo.png" alt="Coach'in Mental" class="site-logo" />
+        <div class="site-title">
+          <h1>Blog de Coach'in Mental</h1>
+          <p>Développe ton mindset et ta performance mentale.</p>
+        </div>
+      </header>
 
-    <p>Développe ton mindset et ta performance mentale.</p>
+    <main class="container">
 
-    <a href="/blog" class="cta">Voir les articles</a>
-	<h2>Derniers articles</h2>
+      <!-- ===== HERO ===== -->
+      <section class="hero">
 
-<div class="grid">
-  {latest.map((post) => (
-    <a href={`/blog/${post.id}`} class="card">
-      <img src={post.data.image} alt={post.data.title} />
-      <h3>{post.data.title}</h3>
-      <p>{post.data.description}</p>
-    </a>
-  ))}
-</div>
+        <!-- Article vedette (gauche 60%) -->
+        <article class="featured">
+          <a href={`/blog/${slug(featured)}/`} class="featured-link">
+            <img src={featured.data.image} alt={featured.data.title} class="featured-img" />
+            <div class="featured-overlay">
+              {featured.data.category && (
+                <span class="badge" style={`background-color: ${getCategoryColor(featured.data.category)}`}>
+                  {getCategoryLabel(featured.data.category)}
+                </span>
+              )}
+              <h2>{featured.data.title}</h2>
+            </div>
+          </a>
+        </article>
+
+        <!-- 3 articles suivants (droite 40%) -->
+        <div class="sidebar">
+          {sidebar.map(post => (
+            <article class="sidebar-card">
+              <a href={`/blog/${slug(post)}/`} class="sidebar-link">
+                <img src={post.data.image} alt={post.data.title} class="sidebar-img" />
+                <div class="sidebar-content">
+                  {post.data.category && (
+                    <span class="badge" style={`background-color: ${getCategoryColor(post.data.category)}`}>
+                      {getCategoryLabel(post.data.category)}
+                    </span>
+                  )}
+                  <h3>{post.data.title}</h3>
+                  <time datetime={post.data.pubDate.toISOString()}>
+                    {post.data.pubDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </time>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+
+      </section>
+
+      <!-- ===== CATÉGORIES EN LIGNE ===== -->
+      <div class="cats-row">
+        {categorySections.map(cat => (
+          <div class="cat-col">
+            <a href={`/category/${cat.slug}`} class="badge" style={`background-color: ${cat.color}`}>
+              {cat.label}
+            </a>
+            <hr class="cat-sep" style={`border-top-color: ${cat.color}`} />
+            {cat.posts[0] && (
+              <a href={`/blog/${slug(cat.posts[0])}/`} class="cat-article-link">
+                {cat.posts[0].data.title}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+
+    </main>
   </body>
 </html>
 
 <style>
-  body {
-    display: flex;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-family: sans-serif;
-  }
+/* ===== HEADER ===== */
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: white;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
 
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  .grid {
+.site-logo {
+  height: 60px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.site-title {
+  flex: 1;
+  text-align: center;
+}
+
+.site-title h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.site-title p {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  margin-top: 0.2rem;
+}
+
+/* ===== HERO ===== */
+.hero {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns: 3fr 2fr;
+  gap: 1.25rem;
+  height: 500px;
+  margin-bottom: 3.5rem;
 }
 
-/* 📱 mobile */
+/* Article vedette */
+.featured {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.featured-link {
+  display: block;
+  height: 100%;
+}
+
+.featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.featured-link:hover .featured-img {
+  transform: scale(1.03);
+}
+
+.featured-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3rem 1.5rem 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+  color: white;
+}
+
+.featured-overlay h2 {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  height: 100%;
+}
+
+.sidebar-card {
+  flex: 1;
+  min-height: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: white;
+  transition: box-shadow 0.2s;
+}
+
+.sidebar-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.sidebar-link {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar-img {
+  width: 40%;
+  flex-shrink: 0;
+  object-fit: cover;
+  height: 100%;
+}
+
+.sidebar-content {
+  flex: 1;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.sidebar-content h3 {
+  font-size: 0.88rem;
+  line-height: 1.35;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.sidebar-content time {
+  margin-top: auto;
+  font-size: 0.72rem;
+  color: var(--color-muted);
+}
+
+/* Badge catégorie — couleur injectée en inline style */
+.badge {
+  display: inline-block;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ===== CATÉGORIES EN LIGNE ===== */
+.cats-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.cat-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.cat-sep {
+  border: none;
+  border-top: 2px solid var(--color-text);
+  margin: 0 0 0.75rem;
+}
+
+.cat-article-link {
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.cat-article-link:hover {
+  color: var(--color-accent);
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .grid {
+  .hero {
     grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .featured {
+    height: 280px;
+  }
+
+  .cats-row {
+    flex-direction: column;
+    gap: 1.5rem;
   }
 }
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-  .card {
-    text-decoration: none;
-    color: black;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    transition: 0.2s;
-  }
-
-  .card:hover {
-    transform: translateY(-5px);
-  }
-
-  img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-
-  h3 {
-    padding: 10px;
-  }
-
-  p {
-    padding: 0 10px 10px;
-    font-size: 1.2rem;
-  }
-
-  .cta {
-    margin-top: 20px;
-    padding: 12px 24px;
-    background: black;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-  }
 </style>

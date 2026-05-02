@@ -47,3 +47,75 @@ img {
   max-width: 100%;
   display: block;
 }
+
+/* Article content (markdown rendu via <Content />) */
+.content h1 {
+  display: none;
+}
+
+.content p {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 1.8rem;
+  color: #1a1a1a;
+}
+
+.content p + p {
+  margin-top: 0.5rem;
+}
+
+.content h2 {
+  color: #5C3D8F;
+  font-size: 1.4rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #5C3D8F;
+  padding-left: 0.8rem;
+}
+
+.content h3 {
+  color: #7B5EA7;
+  font-size: 1.15rem;
+  margin-top: 2rem;
+  margin-bottom: 0.7rem;
+}
+
+.content strong {
+  color: #2C2C2C;
+}
+
+.content em {
+  color: #555;
+  font-style: italic;
+}
+
+.content ul,
+.content ol {
+  max-width: 620px;
+  margin: 1.5rem auto;
+  padding-left: 1.5rem;
+}
+
+.content li {
+  margin-bottom: 0.6rem;
+  line-height: 1.8;
+}
+
+.content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.content blockquote {
+  border-left: 4px solid var(--color-border);
+  padding-left: 1rem;
+  margin: 2rem 0;
+  color: #555;
+}
+
+.content code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { getCategoryLabel, getCategoryColor } from "../../utils/categories";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const posts = await getCollection('posts');
@@ -10,23 +11,29 @@ const posts = await getCollection('posts');
 
   <div class="posts-grid">
   {posts.map((post) => (
-    <a href={`/blog/${post.id.split('/').pop().replace('.md','')}/`} class="post-card">
-
+    <article class="post-card">
       {post.data.image && (
         <div class="card-image-wrapper">
-			<img src={post.data.image} alt={post.data.title} class="card-image" />
-		</div>
+          <img src={post.data.image} alt={post.data.title} class="card-image" />
+        </div>
       )}
-
       <div class="card-content">
-        <h2>{post.data.title}</h2>
+        <h2>
+          <a href={`/blog/${post.id.replace(/\.md$/, '')}/`} class="card-link">
+            {post.data.title}
+          </a>
+        </h2>
         <p>{post.data.description}</p>
         <span>{post.data.pubDate.toLocaleDateString()}</span>
+        {post.data.category && (
+          <a href={`/category/${post.data.category}`} class="category" style={`background-color: ${getCategoryColor(post.data.category)}`}>
+            {getCategoryLabel(post.data.category)}
+          </a>
+        )}
       </div>
-
-    </a>
+    </article>
   ))}
-  </div>
+</div>
 </BaseLayout>
 
 <style is:global>
@@ -46,6 +53,7 @@ const posts = await getCollection('posts');
 
 /* CARD */
 .post-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 16px;
@@ -53,7 +61,7 @@ const posts = await getCollection('posts');
   background: #ffffff;
   border: 1px solid var(--color-border);
   transition: all 0.25s ease;
-  height: 100%; /* ?? important */
+  height: 100%;
 }
 /* TITRE */
 .post-card h2 {
@@ -92,7 +100,26 @@ const posts = await getCollection('posts');
   padding: 1.2rem;
   flex-grow: 1;
 }
+/* stretched link — rend toute la card cliquable */
+.card-link {
+  color: inherit;
+  text-decoration: none;
+}
+.card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
 
+/* couleur injectée en inline style */
+.category {
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
+}
 
 /* SHADOW PREMIUM */
 .post-card:hover {
@@ -124,12 +151,7 @@ const posts = await getCollection('posts');
 /* MOBILE */
 @media (max-width: 768px) {
   .card-image-wrapper {
-    aspect-ratio: 1 / 1; /* ?? ICI */
-  }
-}
-  
- .card-image-wrapper {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 1 / 1;
   }
 
   .post-card h2 {

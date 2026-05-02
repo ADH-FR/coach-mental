@@ -2,8 +2,9 @@
 title: "Pourquoi vous perdez vos moyens en concours malgré un bon niveau à la maison"
 description: "Vous montez juste à la maison mais perdez vos moyens en piste ? Comprenez le mécanisme du stress concours cheval et découvrez une préparation mentale concrète pour stabiliser vos performances."
 slug: "pourquoi-vous-perdez-vos-moyens-en-concours-malgre-un-bon-niveau-a-la-maison"
-pubDate: 2026.04.28
-image: "/images/pourquoi-vous-perdez-vos-moyens-en-concours-malgre-un-bon-niveau-a-la-maison-cover.png"
+pubDate: 2026-04-28
+image: "/images/concours-dressage-cover.png"
+category: "stress-cheval"
 ---
 
 # Pourquoi vous perdez vos moyens en concours malgré un bon niveau à la maison

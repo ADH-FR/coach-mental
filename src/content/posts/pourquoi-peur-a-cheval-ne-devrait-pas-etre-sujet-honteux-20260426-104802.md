@@ -2,8 +2,9 @@
 title: "Pourquoi la peur à cheval ne devrait pas être un sujet honteux"
 description: "La peur à cheval n’est pas une faiblesse. Comprenez pourquoi en parler améliore la sécurité, la progression et la confiance à cheval, sans honte ni jugement."
 slug: "pourquoi-peur-a-cheval-ne-devrait-pas-etre-sujet-honteux"
-pubDate: 2026.04.26
-image: "/images/cross-complet.jpg"
+pubDate: 2026-04-26
+image: "/images/peur-concours-honte-cover.png"
+category: "peur-a-cheval"
 ---
 
 # Pourquoi la peur à cheval ne devrait pas être un sujet honteux

@@ -2,8 +2,9 @@
 title: "Pourquoi le stress en concours est souvent plus fort chez les cavaliers de club"
 description: "Le stress en concours cheval n’est pas un signe de fragilité. Découvrez pourquoi il est souvent plus fort chez les cavaliers de club et comment adapter sa préparation mentale."
 slug: "pourquoi-stress-concours-plus-fort-cavaliers-club"
-pubDate: 2026.04.26
-image: "/images/cross-complet.jpg"
+pubDate: 2026-04-26
+image: "/images/cross-complet-cover.jpg"
+category: "stress-cheval"
 ---
 
 # Pourquoi le stress en concours est souvent plus fort chez les cavaliers de club

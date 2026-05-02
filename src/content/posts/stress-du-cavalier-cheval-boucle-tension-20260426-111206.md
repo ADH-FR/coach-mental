@@ -2,8 +2,9 @@
 title: "Stress du cavalier et cheval : comprendre la boucle qui fait monter la tension"
 description: "Pourquoi un cheval calme devient-il tendu en concours ou en extérieur ? Comprenez la boucle de stress cavalier-cheval, apprenez à distinguer tempérament et effet miroir, et découvrez des leviers concrets de régulation."
 slug: "stress-du-cavalier-cheval-boucle-tension"
-pubDate: 2026.04.26
-image: "/images/cross-complet.jpg"
+pubDate: 2026-04-26
+image: "/images/flatte-encolure-cover.jpg"
+category: "relation-cavalier-cheval"
 ---
 
 # Stress du cavalier et cheval : comprendre la boucle qui fait monter la tension

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx astro *)",
+      "Bash(node -e \"const { glob } = require\\('astro/loaders'\\); console.log\\('ok'\\)\")",
+      "Bash(node -e \"import\\('astro/loaders'\\).then\\(m => console.log\\(Object.keys\\(m\\)\\)\\)\")"
+    ]
+  }
+}

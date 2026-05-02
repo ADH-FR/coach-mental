@@ -2,8 +2,9 @@
 title: "Pourquoi vous perdez vos moyens à cheval quand vous êtes observé — et comment retrouver des repères"
 description: "Vous montez bien seul, mais vous perdez vos moyens dès que l’on vous regarde ? Comprenez le mécanisme de l’anxiété sociale à cheval et retrouvez des repères concrets en cours collectif ou en concours."
 slug: "pourquoi-vous-perdez-vos-moyens-a-cheval-quand-vous-etes-observe"
-pubDate: 2026.04.26
-image: "/images/cross-complet.jpg"
+pubDate: 2026-04-26
+image: "/images/peur-regard-autres-cover.png"
+category: "stress-cheval"
 ---
 
 # Pourquoi vous perdez vos moyens à cheval quand vous êtes observé
